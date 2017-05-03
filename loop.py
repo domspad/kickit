@@ -7,8 +7,9 @@ import time
 
 DATADIR = 'drumkit'
 
-BPM = 200 
-TIME_BETWEEN = 60 / BPM
+BPM = 120
+BEAT_RESOLUTION = 4
+TIME_BETWEEN = 60 / BPM / BEAT_RESOLUTION 
 
 def base_path(filename):
     basename = os.path.basename(filename)
@@ -24,17 +25,27 @@ def play_sound(sound_name):
 
 
 DRUM_PATTERN = {
-        'hhat': [0, 1, 0, 1, 0, 1, 0, 1],
-        'kick': [1, 0, 1, 0, 1, 1, 1, 1],
+        'hhat': [
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            ],
+        'kick': [
+            1, 0, 0, 0,
+            1, 0, 0, 0,
+            1, 0, 0, 0,
+            1, 0, 1, 0,
+            ],
         }
-BEATS_IN_PATTERN = 8
+BEATS_IN_PATTERN = len(DRUM_PATTERN['kick']) 
 
 def read_pattern_and_schedule(loop):
     for sound, pattern in DRUM_PATTERN.items():
         for idx, has_beat in enumerate(pattern):
             if has_beat:
                 loop.call_later(TIME_BETWEEN * idx, functools.partial(play_sound, sound))
-    loop.call_later(TIME_BETWEEN * BEATS_IN_PATTERN, read_pattern_and_schedule, loop)
+    loop.call_later(TIME_BETWEEN * (BEATS_IN_PATTERN), read_pattern_and_schedule, loop)
 
 loop = asyncio.get_event_loop()
 loop.call_soon(read_pattern_and_schedule, loop)
