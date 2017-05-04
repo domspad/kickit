@@ -27,6 +27,10 @@ def set_drum(pattern_widget, block_widget, index=None):
 
 
 def run(args):
+    if not args.demo:
+        for name in DRUM_PATTERN:
+            DRUM_PATTERN[name] = [0 for _ in DRUM_PATTERN[name]]
+
     pile = urwid.Pile([
         PatternWidget(name, DRUM_PATTERN[name], onclick=set_drum)
         for name in ['hhat', 'snare', 'kick']
@@ -39,9 +43,13 @@ def run(args):
     urwid_loop.run()
 
 
-if '__main__' == __name__:
+def main():
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--demo', action='store_true')
 
     args = parser.parse_args()
     run(args)
+
+if '__main__' == __name__:
+    main()
