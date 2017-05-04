@@ -52,6 +52,10 @@ DRUM_PATTERN = {
 BEATS_IN_PATTERN = len(DRUM_PATTERN['kick'])
 
 
+def update_pattern(new_drum_pattern):
+    DRUM_PATTERN.update(new_drum_pattern)
+
+
 def read_pattern_and_schedule(loop):
     for sound, pattern in DRUM_PATTERN.items():
         for idx, has_beat in enumerate(pattern):
