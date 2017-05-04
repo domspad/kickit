@@ -3,7 +3,7 @@ import functools
 import glob
 import os
 import simpleaudio
-import time
+
 
 DATADIR = 'drumkit'
 
@@ -31,11 +31,17 @@ DRUM_PATTERN = {
             0, 0, 1, 0,
             0, 0, 1, 0,
             ],
+        'snare': [
+            0, 0, 0, 0,
+            1, 0, 0, 0,
+            0, 0, 0, 0,
+            1, 0, 0, 0,
+            ],
         'kick': [
             1, 0, 0, 0,
+            0, 0, 1, 0,
             1, 0, 0, 0,
-            1, 0, 0, 0,
-            1, 0, 1, 0,
+            0, 0, 0, 0,
             ],
         }
 BEATS_IN_PATTERN = len(DRUM_PATTERN['kick']) 
